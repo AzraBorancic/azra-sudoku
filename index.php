@@ -2,7 +2,7 @@
 
 echo "Hello world";
 
-$a = 5;
+$a = 6;
 
 echo $a+10;
 

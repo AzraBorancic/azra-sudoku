@@ -1,11 +1,11 @@
 {
-    "name": "ibu/autoresponder",
-    "description": "Auto reseponder system for intro2web course",
+    "name": "AzraBorancic/azra-sudoku",
+    "description": "Sudoku game",
     "license": "Apache2",
     "authors": [
         {
-            "name": "dinokeco",
-            "email": "dino.keco@gmail.com"
+            "name": "AzraBorancic",
+            "email": "azra.borancic@stu.ibu.edu.ba"
         }
     ],
     "require": {}
