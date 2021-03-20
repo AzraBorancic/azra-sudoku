@@ -8,18 +8,18 @@ require_once dirname(__FILE__).'/services/UserService.class.php';
 
 Flight::set('flight.log_errors', TRUE);
 
-///* error handling for our API */
-//Flight::map('error', function(Exception $ex){
-//    Flight::json(["message" => $ex->getMessage()], $ex->getCode());
-//});
-//
-///* utility function for reading query parameters from URL */
-//Flight::map('query', function($name, $default_value = NULL){
-//    $request = Flight::request();
-//    $query_param = @$request->query->getData()[$name];
-//    $query_param = $query_param ? $query_param : $default_value;
-//    return $query_param;
-//});
+/* error handling for our API */
+Flight::map('error', function(Exception $ex){
+    Flight::json(["message" => $ex->getMessage()], $ex->getCode());
+});
+
+/* utility function for reading query parameters from URL */
+Flight::map('query', function($name, $default_value = NULL){
+    $request = Flight::request();
+    $query_param = @$request->query->getData()[$name];
+    $query_param = $query_param ? $query_param : $default_value;
+    return $query_param;
+});
 
 /* register Business Logic layer services */
 Flight::register('userService', 'UserService');
