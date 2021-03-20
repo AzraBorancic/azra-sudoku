@@ -1,5 +1,5 @@
 {
-    "name": "AzraBorancic/azra-sudoku",
+    "name": "azraborancic/sudoku_game",
     "description": "Sudoku game",
     "license": "Apache2",
     "authors": [
@@ -8,5 +8,8 @@
             "email": "azra.borancic@stu.ibu.edu.ba"
         }
     ],
-    "require": {}
+    "require": {
+        "ext-pdo": "^7.3",
+        "mikecao/flight": "^1.3"
+    }
 }
