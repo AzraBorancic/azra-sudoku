@@ -2,9 +2,11 @@
 require_once dirname(__FILE__)."/../config.php";
 
 class BaseDao {
-  private $connection;
+  protected $connection;
+  private $table;
 
-  public function __construct(){
+  public function __construct($table){
+    $this->table = $table;
     try {
       $this->connection = new PDO("mysql:host=".Config::DB_HOST.";dbname=".Config::DB_SCHEME, Config::DB_USERNAME, Config::DB_PASSWORD);
       $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -14,20 +16,10 @@ class BaseDao {
     }
   }
 
-  public function insert(){
-
-  }
-
-  public function update(){
-
-  }
-
-  public function query(){
-    // SELECT * FROM users WHERE id = 7;
-  }
-
-  public function query_unique(){
-
+  public function query($query, $params){
+    $stmt = $this->connection->prepare($query);
+    $stmt->execute($params);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
 }
