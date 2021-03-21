@@ -19,4 +19,3 @@ class UserDao extends BaseDao{
     }
 
 }
-?>
