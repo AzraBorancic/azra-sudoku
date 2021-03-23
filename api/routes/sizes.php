@@ -1,12 +1,7 @@
 <?php
 
 /**
- * @OA\Info(title="Sudoku game API", version="0.1")
- */
-
-/**
- * @OA\Get(
- *     path="/sizes",
+ * @OA\Get(path="/sizes", tags={"puzzles"},
  *     @OA\Response(response="200", description="List puzzle sizes")
  * )
  */

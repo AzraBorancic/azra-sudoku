@@ -9,16 +9,10 @@
  */
 
 /**
- * @OA\Info(title="Sudoku game API", version="0.1")
- */
-
-/**
- * @OA\Get(
- *     path="/levels",
+ * @OA\Get(path="/levels", tags={"puzzles"},
  *     @OA\Response(response="200", description="List level difficulties")
  * )
  */
-
 Flight::route('GET /levels', function(){
     $offset = Flight::query('offset', 0);
     $limit = Flight::query('limit', 25);
