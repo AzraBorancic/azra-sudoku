@@ -12,6 +12,14 @@ class UserService extends BaseService{
         return $this->get_all($offset, $limit, $order);
     }
 
+  /*  public function get_users($search, $offset, $limit, $order){
+        if ($search){
+            return $this->dao->get_users($search, $offset, $limit, $order);
+        }else{
+            return $this->dao->get_all($offset, $limit, $order);
+        }
+    }*/
+
     public function register($user){
         $this->dao->beginTransaction();
 
