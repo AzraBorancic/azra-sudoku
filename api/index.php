@@ -23,17 +23,20 @@ Flight::map('query', function($name, $default_value = NULL){
     return $query_param;
 });
 
+Flight::route('GET /swagger', function(){
+    $openapi = @\OpenApi\scan(dirname(__FILE__)."/routes");
+    header('Content-Type: application/json');
+    echo $openapi->toJson();
+});
+
 /* register Business Logic layer services */
 Flight::register('userService', 'UserService');
 Flight::register('levelService', 'LevelService');
 Flight::register('sizeService', 'SizeService');
 
-
 /* include all routes */
 require_once dirname(__FILE__)."/routes/users.php";
 require_once dirname(__FILE__)."/routes/levels.php";
 require_once dirname(__FILE__)."/routes/sizes.php";
-
-
 
 Flight::start();
