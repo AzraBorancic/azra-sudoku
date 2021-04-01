@@ -32,10 +32,10 @@ Flight::route('GET /users/@id', function($id){
  *   @OA\RequestBody(description="Basic user info",required=true,
  *     @OA\MediaType(mediaType="application/json",
  *    	 @OA\Schema(
- *    	   @OA\Property(property="name", type="string", example=""),
- *         @OA\Property(property="surname", type="string", example=""),
- *         @OA\Property(property="email", type="string", example=""),
- *         @OA\Property(property="password", type="string", example="")
+ *    	   @OA\Property(property="name", required=true, type="string", example="First Name"),
+ *         @OA\Property(property="surname", required=true, type="string", example="Last Name"),
+ *         @OA\Property(property="email", required=true, type="string", example="myemail@gmail.com"),
+ *         @OA\Property(property="password", required=true, type="string", example="12345")
  *          )
  *      )
  * ),
@@ -76,4 +76,22 @@ Flight::route('GET /users/confirm/@token', function($token){
 Flight::route('PUT /users/@id', function($id){
     $data = Flight::request()->data->getData();
     Flight::json(Flight::userService()->update($id, $data));
+});
+
+/**
+ * @OA\Post(path="/users/login", tags={"users"},
+ *   @OA\RequestBody(description="Basic user info",required=true,
+ *     @OA\MediaType(mediaType="application/json",
+ *    	 @OA\Schema(
+ *         @OA\Property(property="email", required=true, type="string", example="myemail@gmail.com"),
+ *         @OA\Property(property="password", required=true, type="string", example="12345")
+ *          )
+ *      )
+ * ),
+ * @OA\Response(response="200", description="User login")
+ * )
+ */
+Flight::route('POST /users/login', function(){
+    $data = Flight::request()->data->getData();
+    Flight::json(Flight::userService()->login($data));
 });
