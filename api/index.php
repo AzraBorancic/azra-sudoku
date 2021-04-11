@@ -7,6 +7,7 @@ require_once dirname(__FILE__).'/../vendor/autoload.php';
 require_once dirname(__FILE__).'/services/UserService.class.php';
 require_once dirname(__FILE__).'/services/LevelService.class.php';
 require_once dirname(__FILE__).'/services/SizeService.class.php';
+use Firebase\JWT\JWT;
 
 Flight::set('flight.log_errors', TRUE);
 
@@ -39,6 +40,7 @@ Flight::register('levelService', 'LevelService');
 Flight::register('sizeService', 'SizeService');
 
 /* include all routes */
+require_once dirname(__FILE__)."/routes/middleware.php";
 require_once dirname(__FILE__)."/routes/users.php";
 require_once dirname(__FILE__)."/routes/levels.php";
 require_once dirname(__FILE__)."/routes/sizes.php";
