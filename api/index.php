@@ -34,6 +34,12 @@ Flight::route('GET /', function(){
     Flight::redirect('/docs');
 });
 
+
+Flight::map('jwt', function($user){
+    $jwt = \Firebase\JWT\JWT::encode(["exp" => (time() + Config::JWT_TOKEN_TIME), "id" => $user["id"], "aid" => $user["account_id"], "r" => $user["role"]], "JWT_SECRET");
+    return ["token" => $jwt];
+});
+
 /* register Business Logic layer services */
 Flight::register('userService', 'UserService');
 Flight::register('levelService', 'LevelService');
