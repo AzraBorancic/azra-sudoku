@@ -1,7 +1,15 @@
 <?php
+/* Swagger documentation */
+/**
+ * @OA\Info(title="Sudoku game API", version="0.1")
+ * @OA\OpenApi(
+ *   @OA\Server(url="http://localhost/azra-sudoku/api/", description="Development Environment")),
+ *   @OA\SecurityScheme(securityScheme="ApiKeyAuth", type="apiKey", in="header", name="Authorization")
+ */
+
 
 /**
- * @OA\Get(path="/users", tags={"users"},
+ * @OA\Get(path="/users", tags={"users"}, security={{"ApiKeyAuth":{}}},
  *     @OA\Parameter(type="integer", in="query", name="offset", default=0, description="Offset for pagination"),
  *     @OA\Parameter(type="integer", in="query", name="limit", default=25, description="Limit for pagination"),
  *     @OA\Parameter(type="string", in="query", name="order", default="-id", description="Sorting for return elements: -column_name for ascedning order or +column_name for descending order"),
@@ -11,24 +19,25 @@
 Flight::route('GET /users', function(){
     $offset = Flight::query('offset', 0);
     $limit = Flight::query('limit', 25);
-/*    $search = Flight::query('search');*/
+/*  $search = Flight::query('search');*/
     $order = Flight::query('order', "-id");
 
     Flight::json(Flight::userService()->get_users($offset, $limit, $order));
 });
 
 /**
- * @OA\Get(path="/users/{id}", tags={"users"},
- *     @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1, description="Get user by id"),
+ * @OA\Get(path="/users/{id}", tags={"users"}, security={{"ApiKeyAuth":{}}},
+ *     @OA\Parameter(type="integer", in="path", name="id", default=1, description="Get user by id"),
  *     @OA\Response(response="200", description="Fetch individual account")
  * )
  */
 Flight::route('GET /users/@id', function($id){
+    if(Flight::get('user')['id'] != $id) throw new Exception("This user is not for you", 403);
     Flight::json(Flight::userService()->get_by_id($id));
 });
 
 /**
- * @OA\Post(path="/users/register", tags={"users"},
+ * @OA\Post(path="/users/register", tags={"users"}, security={{"ApiKeyAuth":{}}},
  *   @OA\RequestBody(description="Basic user info",required=true,
  *     @OA\MediaType(mediaType="application/json",
  *    	 @OA\Schema(
@@ -48,7 +57,7 @@ Flight::route('POST /users/register', function(){
 });
 
 /**
- * @OA\Get(path="/users/confirm/{token}", tags={"users"},
+ * @OA\Get(path="/users/confirm/{token}", tags={"users"}, security={{"ApiKeyAuth":{}}},
  *     @OA\Parameter(type="string", in="path", allowReserved=true, name="token", example=1)),
  *     @OA\Response(response="200", description="Get user account status")
  */
@@ -58,7 +67,7 @@ Flight::route('GET /users/confirm/@token', function($token){
 });
 
 /**
- * @OA\Put(path="/users/{id}", tags={"users"},
+ * @OA\Put(path="/users/{id}", tags={"users"}, security={{"ApiKeyAuth":{}}},
  *   @OA\Parameter(@OA\Schema(type="integer"), in="path", name="id", default=1),
  *   @OA\RequestBody(description="Basic account info that is going to be updated", required=true,
  *       @OA\MediaType(mediaType="application/json",
@@ -79,7 +88,7 @@ Flight::route('PUT /users/@id', function($id){
 });
 
 /**
- * @OA\Post(path="/users/login", tags={"users"},
+ * @OA\Post(path="/users/login", tags={"users"}, security={{"ApiKeyAuth":{}}},
  *   @OA\RequestBody(description="Basic user info",required=true,
  *     @OA\MediaType(mediaType="application/json",
  *    	 @OA\Schema(

@@ -1,13 +1,5 @@
 <?php
 
-/* Swagger documentation */
-/**
- * @OA\Info(title="Sudoku game API", version="0.1")
- * @OA\OpenApi(
- *   @OA\Server(url="http://localhost/azra-sudoku/api/", description="Development Environment")
- * )
- */
-
 /**
  * @OA\Get(path="/levels", tags={"puzzles"},
  *     @OA\Response(response="200", description="List level difficulties")
