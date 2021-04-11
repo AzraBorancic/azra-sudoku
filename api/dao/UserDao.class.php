@@ -18,15 +18,4 @@ class UserDao extends BaseDao{
         return $this->query_unique("SELECT * FROM users WHERE token = :token", ["token" => $token]);
     }
 
- /*   public function get_users($search, $offset, $limit, $order){
-        list($order_column, $order_direction) = self::parse_order($order);
-
-        return $this->query("SELECT *
-                         FROM accounts
-                         WHERE LOWER(name) LIKE CONCAT('%', :name, '%')
-                         ORDER BY ${order_column} ${order_direction}
-                         LIMIT ${limit} OFFSET ${offset}",
-            ["name" => strtolower($search)]);
-    }*/
-
 }

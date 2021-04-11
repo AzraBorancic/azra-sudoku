@@ -28,9 +28,6 @@ class SMTPClient {
             ->setFrom(['azra.intj@gmail.com' => 'Sudoku Game'])
             ->setTo([$user['email']])
             ->setBody('Here is the recovery token: '.$user['token']);
-
         $this->mailer->send($message);
     }
-
 }
-?>
