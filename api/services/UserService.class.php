@@ -6,13 +6,11 @@ require_once dirname(__FILE__).'/../clients/SMTPClient.class.php';
 
 class UserService extends BaseService{
 
+    private $smtpClient;
+
     public function __construct(){
         $this->dao = new UserDao();
         $this->smtpClient = new SMTPClient();
-    }
-
-    public function get_users($offset, $limit, $order){
-        return $this->get_all($offset, $limit, $order);
     }
 
     public function reset($user){
@@ -32,7 +30,7 @@ class UserService extends BaseService{
 
         if (!isset($db_user['id'])) throw new Exception("User doesn't exists", 400);
 
-        if (strtotime(date(Config::DATE_FORMAT)) - strtotime($db_user['token_created_at']) < 300) throw new Exception("Be patient tokens is on his way", 400);
+        if (strtotime(date(Config::DATE_FORMAT)) - strtotime($db_user['token_created_at']) < 300) throw new Exception("Be patient, the token is on its way!", 400);
 
         $db_user = $this->update($db_user['id'], ['token' => md5(random_bytes(16)), 'token_created_at' => date(Config::DATE_FORMAT)]);
 
@@ -48,15 +46,13 @@ class UserService extends BaseService{
 
         if ($db_user['status'] != 'ACTIVE') throw new Exception("Account not active", 400);
 
-        $jwt = \Firebase\JWT\JWT::encode(["exp" => (time() + Config::JWT_TOKEN_TIME), "id" => $db_user["id"]], Config::JWT_SECRET);
-
-        return ["token" => $jwt];
+        return $db_user;
     }
 
     public function register($user){
-
         try {
             $this->dao->beginTransaction();
+
             $user = parent::add([
                 "name" => $user['name'],
                 "surname" => $user['surname'],
@@ -64,15 +60,16 @@ class UserService extends BaseService{
                 "password" => md5($user['password']),
                 "status" => "PENDING",
                 "created_at" => date(Config::DATE_FORMAT),
-                "token" => md5(random_bytes(16))
+                "token" => md5(random_bytes(16)),
+                "role" => "USER"
             ]);
             $this->dao->commit();
         } catch (\Exception $e) {
             $this->dao->rollBack();
-            if (str_contains($e->getMessage(), 'users.eq_user_email')) {
-                throw new Exception("Account with same email exists in the database", 400, $e);
+            if (str_contains($e->getMessage(), 'users.uq_user_email')) {
+                throw new Exception("Account with the same email exists in the database", 400);
             }else{
-                throw new Exception("Invalid request body!", 400, $e);
+                throw $e;
             }
         }
 
@@ -84,11 +81,10 @@ class UserService extends BaseService{
     public function confirm($token){
         $user = $this->dao->get_user_by_token($token);
 
-        if (!isset($user['id'])) throw Exception("Invalid token");
+        if (!isset($user['id'])) throw Exception("Invalid token.");
 
         $this->dao->update($user['id'], ["status" => "ACTIVE"]);
 
         return $user;
     }
-
 }
