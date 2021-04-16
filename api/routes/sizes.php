@@ -5,7 +5,6 @@
  *     @OA\Response(response="200", description="List puzzle sizes")
  * )
  */
-
 Flight::route('GET /sizes', function(){
     $offset = Flight::query('offset', 0);
     $limit = Flight::query('limit', 25);
