@@ -1,4 +1,5 @@
 <?php
+
 /* Swagger documentation */
 /**
  * @OA\Info(title="Sudoku game API", version="0.1")
@@ -14,7 +15,7 @@
  *     @OA\Parameter(type="string", in="query", name="order", default="-id", description="Sorting for return elements: -column_name for ascedning order or +column_name for descending order"),
  *     @OA\Response(response="200", description="List users from database"))
  */
-Flight::route('GET /users', function(){
+Flight::route('GET /admin/users', function(){
     $offset = Flight::query('offset', 0);
     $limit = Flight::query('limit', 25);
 /*  $search = Flight::query('search');*/
@@ -29,8 +30,7 @@ Flight::route('GET /users', function(){
  *     @OA\Response(response="200", description="Fetch individual account")
  * )
  */
-Flight::route('GET /users/@id', function($id){
-    if(Flight::get('user')['id'] != $id) throw new Exception("This user is not for you", 403);
+Flight::route('GET /admin/users/@id', function($id){
     Flight::json(Flight::userService()->get_by_id($id));
 });
 
@@ -46,22 +46,23 @@ Flight::route('GET /users/@id', function($id){
  *         )
  *       )
  * ),
- * @OA\Response(response="200", description="Add user to database")
+ * @OA\Response(response="200", description="User has been created")
  * )
  */
-Flight::route('POST /users/register', function(){
+Flight::route('POST /register', function(){
     $data = Flight::request()->data->getData();
-    Flight::json(Flight::userService()->register($data));
+    Flight::userService()->register($data);
+    Flight::json(["message" => "Confirmation email has been sent. Please confirm your account"]);
 });
 
 /**
  * @OA\Get(path="/confirm/{token}", tags={"login"},
- *     @OA\Parameter(type="string", in="path", allowReserved=true, name="token", example=1)),
- *     @OA\Response(response="200", description="Get user account status")
+ *     @OA\Parameter(type="string", in="path", name="token", default=123, description="Temporary token for activating account"),
+ *     @OA\Response(response="200", description="Message upon successfull activation.")
+ * )
  */
-Flight::route('GET /users/confirm/@token', function($token){
-    Flight::userService()->confirm($token);
-    Flight::json(["message" => "Your account has been activated"]);
+Flight::route('GET /confirm/@token', function($token){
+    Flight::json(Flight::jwt(Flight::userService()->confirm($token)));
 });
 
 /**
@@ -80,13 +81,13 @@ Flight::route('GET /users/confirm/@token', function($token){
  *     @OA\Response(response="200", description="Update account based on id")
  * )
  */
-Flight::route('PUT /users/@id', function($id){
+Flight::route('PUT /admin/users/@id', function($id){
     $data = Flight::request()->data->getData();
     Flight::json(Flight::userService()->update($id, $data));
 });
 
 /**
- * @OA\Post(path="/users/login", tags={"x-user"},
+ * @OA\Post(path="/users/login", tags={"login"},
  *   @OA\RequestBody(description="Basic user info",required=true,
  *     @OA\MediaType(mediaType="application/json",
  *    	 @OA\Schema(
@@ -98,9 +99,8 @@ Flight::route('PUT /users/@id', function($id){
  * @OA\Response(response="200", description="User login")
  * )
  */
-Flight::route('POST /users/login', function(){
-    $data = Flight::request()->data->getData();
-    Flight::json(Flight::userService()->login($data));
+Flight::route('POST /login', function(){
+    Flight::json(Flight::jwt(Flight::userService()->login(Flight::request()->data->getData())));
 });
 
 /**
