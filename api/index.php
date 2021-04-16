@@ -24,6 +24,13 @@ Flight::map('query', function($name, $default_value = NULL){
     return $query_param;
 });
 
+/* utility function for getting header parameters */
+Flight::map('header', function($name){
+    $headers = getallheaders();
+    return @$headers[$name];
+});
+
+
 Flight::route('GET /swagger', function(){
     $openapi = @\OpenApi\scan(dirname(__FILE__)."/routes");
     header('Content-Type: application/json');
@@ -35,8 +42,9 @@ Flight::route('GET /', function(){
 });
 
 
+/* utility function for generating JWT token */
 Flight::map('jwt', function($user){
-    $jwt = \Firebase\JWT\JWT::encode(["exp" => (time() + Config::JWT_TOKEN_TIME), "id" => $user["id"], "aid" => $user["account_id"], "r" => $user["role"]], "JWT_SECRET");
+    $jwt = \Firebase\JWT\JWT::encode(["exp" => (time() + Config::JWT_TOKEN_TIME), "id" => $user["id"], "r" => $user["role"]], Config::JWT_SECRET);
     return ["token" => $jwt];
 });
 
