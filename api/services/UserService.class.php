@@ -18,7 +18,7 @@ class UserService extends BaseService{
 
         if (!isset($db_user['id'])) throw new Exception("Invalid token", 400);
 
-        if (strtotime(date(Config::DATE_FORMAT)) - strtotime($db_user['token_created_at']) > 300) throw new Exception("Token expired", 400);
+//        if (strtotime(date(Config::DATE_FORMAT)) - strtotime($db_user['token_created_at']) > 300) throw new Exception("Token expired", 400);
 
         $this->dao->update($db_user['id'], ['password' => md5($user['password']), 'token' => NULL]);
 
@@ -30,9 +30,9 @@ class UserService extends BaseService{
 
         if (!isset($db_user['id'])) throw new Exception("User doesn't exists", 400);
 
-        if (strtotime(date(Config::DATE_FORMAT)) - strtotime($db_user['token_created_at']) < 300) throw new Exception("Be patient, the token is on its way!", 400);
+//        if (strtotime(date(Config::DATE_FORMAT)) - strtotime($db_user['token_created_at']) < 300) throw new Exception("Be patient, the token is on its way!", 400);
 
-        $db_user = $this->update($db_user['id'], ['token' => md5(random_bytes(16)), 'token_created_at' => date(Config::DATE_FORMAT)]);
+        $db_user = $this->update($db_user['id'], ['token' => md5(random_bytes(16))]);
 
         $this->smtpClient->send_user_recovery_token($db_user);
     }
@@ -40,7 +40,9 @@ class UserService extends BaseService{
     public function login($user){
         $db_user = $this->dao->get_user_by_email($user['email']);
 
-        if ($db_user['password'] != $user['password']) throw new Exception("Invalid password", 400);
+        if (!is_array($db_user)) throw new Exception("User doesn't exist", 400);
+
+        if ($db_user['password'] != md5($user['password'])) throw new Exception("Invalid password", 400);
 
         if (!isset($db_user['id'])) throw new Exception("User doesn't exist", 400);
 

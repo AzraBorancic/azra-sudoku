@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Azra Sudoku - Login</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="./assets/css/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="./assets/css/startmin.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="./assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
+    <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" type="text/css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body style="display:none;">
+
+<div class="container">
+    <div id="login-form-container" class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Please Sign In</h3>
+                </div>
+                <div class="panel-body">
+                    <form id="login-form" role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password"
+                                       value="">
+                            </div>
+                            <div class="form-group">
+                                <button id="login-link" onclick="doLogin();" class="btn btn-lg btn-success btn-block">
+                                    Login
+                                </button>
+                            </div>
+                            <div class="form-group pull-left">
+                                <a href="#" onclick="showForgotForm()">Forgot Password</a>
+                            </div>
+                            <div class="form-group pull-right">
+                                <a href="#" onclick="showRegisterForm()">Register here</a>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="form-alert" class="row hidden" style="margin-top: 50px;">
+        <div class="alert alert-success" role="alert">
+            This is a success alert—check it out!
+        </div>
+    </div>
+    <div id="register-form-container" class="row hidden">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Register Form</h3>
+                </div>
+                <div class="panel-body">
+                    <form id="register-form" role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Your name" name="name" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Your surname" name="surname" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="E-mail" name="email" type="text">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password"
+                                       value="">
+                            </div>
+                            <div class="form-group">
+                                <button id="register-link" onclick="doRegister();"
+                                        class="btn btn-lg btn-success btn-block">Register
+                                </button>
+                            </div>
+                            <div class="form-group pull-right">
+                                <a href="#" onclick="showLoginForm()">Back to Login</a>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="forgot-form-container" class="row hidden">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Forgot Password</h3>
+                </div>
+                <div class="panel-body">
+                    <form id="forgot-form" role="form">
+                        <fieldset>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <button id="forgot-link" onclick="doForgotPassword()"
+                                        class="btn btn-lg btn-success btn-block">Send Recovery Link
+                                </button>
+                            </div>
+                            <div class="form-group pull-right">
+                                <a href="#" onclick="showLoginForm()">Back to Login</a>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="change-password-form-container" class="row hidden">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Change Password</h3>
+                </div>
+                <div class="panel-body">
+                    <form id="change-form" role="form">
+                        <fieldset>
+                            <input id="change-password-token" name="token" type="hidden">
+
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Password" name="password" type="password"
+                                       value="">
+                            </div>
+                            <div class="form-group">
+                                <button id="change-link" onclick="doChangePassword();"
+                                        class="btn btn-lg btn-success btn-block">Change Password
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="./assets/js/jquery.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="./assets/js/bootstrap.min.js"></script>
+<!-- Toastr JS -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script src="./assets/js/utils.js"></script>
+<script type="text/javascript">
+
+    $(function () {
+        if (window.localStorage.getItem("token")) {
+            window.location = "index.html";
+        } else {
+            $('body').show();
+        }
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('confirmation_token')) {
+            $.get("api/confirm/" + urlParams.get('confirmation_token'))
+                .done(function (data) {
+                        console.log(data);
+                        toastr.success('Account successfully confirmed, please log in!');
+                    }).fail(function (error) {
+                console.log(error);
+                toastr.error('This token is invalid or expired!');
+            });
+        }
+        if (urlParams.has('recovery_token')) {
+            $("#change-password-token").val(urlParams.get('recovery_token'));
+            showChangePasswordForm();
+        }
+    });
+
+    function showChangePasswordForm() {
+        $("#change-password-form-container").removeClass("hidden");
+        $("#login-form-container").addClass("hidden");
+        $("#register-form-container").addClass("hidden");
+        $("#register-form-container").addClass("hidden");
+    }
+
+    function showForgotForm() {
+        $("#login-form-container").addClass("hidden");
+        $("#forgot-form-container").removeClass("hidden");
+    }
+
+    function showRegisterForm() {
+        $("#login-form-container").addClass("hidden");
+        $("#register-form-container").removeClass("hidden");
+    }
+
+    function showLoginForm() {
+        $("#login-form-container").removeClass("hidden");
+        $("#register-form-container").addClass("hidden");
+        $("#forgot-form-container").addClass("hidden");
+    }
+
+    function doRegister() {
+
+        $("#register-link").prop('disabled',true);
+        $.post("api/register", jsonize_form("#register-form")).done(function( data ) {
+            console.log(data);
+            $("#register-form-container").addClass("hidden");
+            $("#form-alert").removeClass("hidden")
+            $("#form-alert .alert").html(data.message);
+        }).fail(function(error) {
+            $("#register-link").prop('disabled',false);
+            console.log(error);
+            alert(error.responseJSON.message);
+        });
+
+    }
+
+    function doLogin() {
+
+        $("#login-link").prop('disabled', true);
+        $.post("api/login", jsonize_form("#login-form")).done(function (data) {
+            console.log(data);
+            window.localStorage.setItem("token", data.token);
+            window.location = "index.html";
+        }).fail(function (error) {
+            $("#login-link").prop('disabled', false);
+            console.log(error);
+            toastr.error(error.responseJSON.message);
+        });
+    }
+
+    function doForgotPassword() {
+
+        $("#forgot-link").prop('disabled', true);
+        $.post("api/forgot", jsonize_form("#forgot-form")).done(function (data) {
+            console.log(data);
+            toastr.info(data.message);
+        }).fail(function (error) {
+            $("#forgot-link").prop('disabled', false);
+            $("#forgot-form-container").addClass("hidden");
+            $("#form-alert").removeClass("hidden")
+            $("#form-alert .alert").html(error.responseJSON.message);
+        });
+    }
+
+    function doChangePassword() {
+        $("#change-link").prop('disabled', true);
+        $.post("api/reset", jsonize_form("#change-form")).done(function (data) {
+            window.localStorage.setItem("token", data.token);
+            window.location = "index.html";
+        }).fail(function (error) {
+            $("#change-link").prop('disabled', false);
+            toastr.error(error.responseJSON.message);
+        });
+
+    }
+</script>
+</body>
+</html>

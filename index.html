@@ -123,7 +123,7 @@
                             <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                             </li>
                             <li class="divider"></li>
-                            <li><a href="#login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <li><a onclick="doLogout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
                     </li>
@@ -258,15 +258,19 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 var app = $.jQuerySPApp({defaultView  : "dashboard"}); // initialize
-
-                // define routes
-                app.route({view: 'dashboard', load: 'dashboard.html' });
-                app.route({view: 'tables', load: 'tables.html' });
-                app.route({view: 'notifications', load: 'notifications.html' });
-
-                // run app
                 app.run();
+
+                if (!window.localStorage.getItem("token")){
+                    window.location = "login.html";
+                }else{
+                    $('body').show();
+                }
             });
+
+            function doLogout(){
+                window.localStorage.removeItem("token");
+                window.location = "login.html";
+            }
         </script>
 
     </body>

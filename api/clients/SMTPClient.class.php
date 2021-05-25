@@ -15,19 +15,37 @@ class SMTPClient {
     }
 
     public function send_register_user_token($user){
+        $domain = 'http';
+
+        if ($_SERVER['HTTP_HOST'] == 'localhost') {
+            $host = 'localhost/azra-sudoku';
+        } else {
+            $domain = 'https';
+            $host = $_SERVER['HTTP_HOST'];
+        }
+
         $message = (new Swift_Message('Confirm your account'))
             ->setFrom(['azra.intj@gmail.com' => 'Sudoku Game'])
             ->setTo([$user['email']])
-            ->setBody('Here is the confirmation link: http://localhost/azra-sudoku/api/users/confirm/'.$user['token']);
+            ->setBody('Here is the confirmation link: '.$domain.'://'.$host.'/login.html?confirmation_token='.$user['token']);
 
         $this->mailer->send($message);
     }
 
     public function send_user_recovery_token($user){
+        $domain = 'http';
+
+        if ($_SERVER['HTTP_HOST'] == 'localhost') {
+            $host = 'localhost/azra-sudoku';
+        } else {
+            $domain = 'https';
+            $host = $_SERVER['HTTP_HOST'];
+        }
+
         $message = (new Swift_Message('Reset Your Password'))
             ->setFrom(['azra.intj@gmail.com' => 'Sudoku Game'])
             ->setTo([$user['email']])
-            ->setBody('Here is the recovery token: '.$user['token']);
+            ->setBody('Here is the recovery token: '.$domain.'://'.$host.'/login.html?recovery_token='.$user['token']);
         $this->mailer->send($message);
     }
 }
