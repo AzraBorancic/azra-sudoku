@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +7,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>Startmin - Bootstrap Admin Theme</title>
+        <title>Sudoku Game</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
@@ -44,7 +44,7 @@
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">Startmin</a>
+                    <a class="navbar-brand" href="index.html">Play sudoku online</a>
                 </div>
 
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -54,73 +54,14 @@
                     <span class="icon-bar"></span>
                 </button>
 
-                <ul class="nav navbar-nav navbar-left navbar-top-links">
-                    <li><a href="#"><i class="fa fa-home fa-fw"></i> Website</a></li>
-                </ul>
-
                 <ul class="nav navbar-right navbar-top-links">
-                    <li class="dropdown navbar-inverse">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-bell fa-fw"></i> <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu dropdown-alerts">
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-comment fa-fw"></i> New Comment
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                        <span class="pull-right text-muted small">12 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-tasks fa-fw"></i> New Task
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div>
-                                        <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                        <span class="pull-right text-muted small">4 minutes ago</span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a class="text-center" href="#">
-                                    <strong>See All Alerts</strong>
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-user fa-fw"></i> secondtruth <b class="caret"></b>
+                            <i class="fa fa-user fa-fw"></i> My account <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                            </li>
-                            <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                            <li>
+                                <a href="#user_profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
                             </li>
                             <li class="divider"></li>
                             <li><a onclick="doLogout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -128,8 +69,6 @@
                         </ul>
                     </li>
                 </ul>
-                <!-- /.navbar-top-links -->
-
                 <div class="navbar-default sidebar" role="navigation">
                     <div class="sidebar-nav navbar-collapse">
                         <ul class="nav" id="side-menu">
@@ -137,88 +76,28 @@
                                 <a href="#dashboard" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                             </li>
                             <li>
-                                <a href="#charts"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
+                                <a href="#play"><i class="fa fa-sitemap fa-fw"></i> Play Sudoku<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
                                     <li>
-                                        <a href="#flot">Flot Charts</a>
+                                        <a href="#beginner_mode">Beginner - 4x4</a>
                                     </li>
                                     <li>
-                                        <a href="#morris">Morris.js Charts</a>
+                                    <li>
+                                        <a href="#easy_mode">Easy - 9x9</a>
+                                    </li>
+                                    <li>
+                                        <a href="#medium_mode">Medium - 16x16</a>
+                                    </li>
+                                    <li>
+                                        <a href="#hard_mode">Hard - 25x25</a>
+                                    </li>
+                                    <li>
+                                        <a href="#expert_mode">Expert - 36x36</a>
                                     </li>
                                 </ul>
-                                <!-- /.nav-second-level -->
                             </li>
                             <li>
-                                <a href="#tables"><i class="fa fa-table fa-fw"></i> Tables</a>
-                            </li>
-                            <li>
-                                <a href="#forms"><i class="fa fa-edit fa-fw"></i> Forms</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-wrench fa-fw"></i> UI Elements<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="#panels-wells">Panels and Wells</a>
-                                    </li>
-                                    <li>
-                                        <a href="#buttons">Buttons</a>
-                                    </li>
-                                    <li>
-                                        <a href="#notifications">Notifications</a>
-                                    </li>
-                                    <li>
-                                        <a href="#typography">Typography</a>
-                                    </li>
-                                    <li>
-                                        <a href="#icons"> Icons</a>
-                                    </li>
-                                    <li>
-                                        <a href="#grid">Grid</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-sitemap fa-fw"></i> Multi-Level Dropdown<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="#">Second Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Second Level Item</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Third Level <span class="fa arrow"></span></a>
-                                        <ul class="nav nav-third-level">
-                                            <li>
-                                                <a href="#">Third Level Item</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Third Level Item</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Third Level Item</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Third Level Item</a>
-                                            </li>
-                                        </ul>
-                                        <!-- /.nav-third-level -->
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
-                                <ul class="nav nav-second-level">
-                                    <li>
-                                        <a href="#blank">Blank Page</a>
-                                    </li>
-                                    <li>
-                                        <a href="#login">Login Page</a>
-                                    </li>
-                                </ul>
-                                <!-- /.nav-second-level -->
+                                <a href="#leaderboards"><i class="fa fa-edit fa-fw"></i> Leaderboards</a>
                             </li>
                         </ul>
                     </div>
@@ -227,37 +106,32 @@
 
             <main id="jqueryspapp" role="main">
                 <section id="dashboard" data-load="dashboard.html" ></section>
-                <section id="tables" data-load="tables.html"></section>
-                <section id="notifications" data-load="notifications.html"></section>
-
+                <section id="play" data-load="play.html"></section>
+                <section id="leaderboards" data-load="leaderboards.html"></section>
+                <section id="beginner_mode" data-load="beginner_mode.html"></section>
+                <section id="easy_mode" data-load="easy_mode.html"></section>
+                <section id="medium_mode" data-load="medium_mode.html"></section>
+                <section id="hard_mode" data-load="hard_mode.html"></section>
+                <section id="expert_mode" data-load="expert_mode.html"></section>
+                <section id="user_profile" data-load="user_profile.html"></section>
             </main>
-            <!-- /#page-wrapper -->
 
         </div>
-        <!-- /#wrapper -->
-
         <!-- jQuery -->
         <script src="./assets/js/jquery.min.js"></script>
-
         <!-- Bootstrap Core JavaScript -->
         <script src="./assets/js/bootstrap.min.js"></script>
-
         <!-- Metis Menu Plugin JavaScript -->
         <script src="./assets/js/metisMenu.min.js"></script>
-
         <!-- SPAPP JS -->
         <script src="./assets/js/jQuerySPApp.js"></script>
-
-<!--         Morris Charts JavaScript-->
-<!--        <script src="./assets/js/raphael.min.js"></script>-->
-<!--        <script src="./assets/js/morris.min.js"></script>-->
-<!--        <script src="./assets/js/morris-data.js"></script>-->
-
         <!-- Custom Theme JavaScript -->
         <script src="./assets/js/startmin.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
         <script type="text/javascript">
             $(document).ready(function() {
-                var app = $.jQuerySPApp({defaultView  : "dashboard"}); // initialize
+                const app = $.jQuerySPApp({defaultView: "dashboard"});
                 app.run();
 
                 if (!window.localStorage.getItem("token")){
